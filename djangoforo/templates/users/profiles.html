@@ -1,0 +1,109 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %} My Profile {% endblock %}
+
+
+{% block content %}
+
+<div class="grid gap-x-8 gap-y-4 grid-cols-1 p-4 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 ">
+
+    <div class="sm:mb-4 md:mb-4 lg:mb-4 xl:mx-10 2xl:mx-10">
+
+        <div class="bg-oscuro rounded-lg">
+            <h1 class="text-xl p-6 font-sembibold font-mono text-center text-claro">
+                Personal Details
+            </h1>
+
+            <div class="grid grid-cols-1 sm:grid-cols-1 ml-[50px]  md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2">
+
+                <div class="ml-5 mb-8">
+                    <img class="w-40 h-40 rounded-full" src="{{ user.avatar.url }}" alt="{{ user.username }}"/>
+                </div>
+
+                <div>
+                    <p class="mb-2 font-mono font-semibold flex text-claro">
+                        Username: <span class="text-verde">{{ user.username }}</span> 
+                    </p>
+
+                    <p class="mb-2 font-mono font-semibold flex text-claro">
+                        Email: <span class="text-verde">{{ user.email }}</span> 
+                    </p>
+
+                    <p class="mb-2 font-mono font-semibold flex text-claro">
+                        Bio: <span class="text-verde">{{ user.bio }}</span> 
+                    </p>
+                </div>
+
+            </div>
+
+            
+        </div>
+
+    </div>
+
+    <div>
+      
+        <div class="mb-4">
+            <div class="bg-oscuro p-3 rounded-lg">
+                <h1 class="text-xl p-2 text-center font-mono font-semibold text-claro">
+                    Hosted Rooms
+                </h1>
+            </div>
+        </div>
+
+        {% for room in rooms %}
+        <div class="mb-2">
+            <div class="bg-oscuro rounded-lg p-2">
+      
+              <h1 class="text-xl p-2 text-center font-mono font-semibold text-claro">
+                {{ room.name }}
+              </h1>
+      
+              <div class="flex justify-center">
+      
+                <a href="{% url 'room' room.id %}" class="p-3 font-mono font-semibold text-negro rounded-lg bg-rosa">
+                  Enter
+                </a>
+      
+                <form action="{% url 'like_room' %}" class="ml-2" method="POST">
+                  {% csrf_token %}
+      
+                  <input type="hidden" name="room_id" value="{{ room.id }}"/>
+      
+                  {% if user not in room.like.all %}
+                  <button type="submit">
+                    <img src="{% static 'images/unlike.jpg' %}" width="40" height="40"/>
+                  </button>
+                  {% else %}
+                  <button type="submit">
+                    <img src="{% static 'images/like.jpg' %}" width="40" height="40"/>
+                  </button>
+                  {% endif %}
+                </form>
+      
+              </div>
+      
+              <div class="flex justify-center">
+      
+                <p class="text-sm font-mono font-semibold p-2 text-claro">
+                  Host:
+      
+                  <a href="" class="text-sm font-mono hover:text-verde font-semibold text-claro">
+                    {{ room.user.username }}
+                  </a>
+      
+                  <span class="font-mono font-semibold text-rosa">
+                    {{ room.like.all.count }} Likes
+                  </span>
+                </p>
+      
+              </div>
+          </div>
+        </div>
+{% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,123 @@
+<nav class="bg-oscuro px-4 py-3">
+    <div class="flex justify-between items-center">
+
+        <a href="/" class="text-xl font-semibold font-mono text-claro">
+            HOME
+        </a>
+
+        <div class="hidden m-2 md:flex">
+
+            <form class="m-2" method="GET" action="{% url 'search' %}">
+                <div class="relative">
+                    <div class="absolute inset-y-0 letf-0 flex items-center pl-3">
+                        <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-search"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+                        />
+                      </svg>
+                    </div>
+                    <input name="query"
+                     class="block w-full p-4 pl-10 text-sm rounded-lg" placeholder="Serach here..."/>
+                </div>
+            </form>
+
+            {% if request.user.is_authenticated %}
+
+            <a href="{% url 'logout_user' %}" class="px-5 py-3 m-2 block font-mono font-semibold text-negro rounded-lg bg-claro">
+                LOGOUT
+            </a>
+
+            <a href="{% url 'create_room' %}" class="px-5 py-3 m-2 block font-mono font-semibold text-negro rounded-lg bg-rosa">
+                CREATE
+            </a>
+
+            {% else %}
+
+            <a href="{% url 'register_page' %}" class="px-5 py-3 m-2 block font-mono font-semibold text-negro rounded-lg bg-claro">
+                REGISTER
+            </a>
+
+            <a href="{% url 'login_page' %}" class="px-5 py-3 m-2 block font-mono font-semibold text-negro rounded-lg bg-rosa">
+                LOGIN
+            </a>
+
+            {% endif %}
+
+        </div>
+
+        <div class="flex">
+            
+            {% if request.user.is_authenticated %}
+
+            <a href="{% url 'my_profile' %}" class="mr-5">
+                <img class="w-11 h-11 rounded-full" src="{{ user.avatar.url }}" alt="{{ user.username }}"/>
+            </a>
+
+            {% else %}
+            
+            {% endif %}
+
+
+            <button data-mobile-menu class="text-claro px-2 m-5 ml-5 py-1 md:hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                  </svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="hidden" id="mobile-menu">
+        <div class="flex flex-col py-3">
+            <form class="m-2" method="GET" action="{% url 'search' %}">
+                <div class="relative">
+                    <div class="absolute inset-y-0 letf-0 flex items-center pl-3">
+                        <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-search"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+                        />
+                      </svg>
+                    </div>
+                    <input name="query"
+                     class="block w-full p-4 pl-10 text-sm rounded-lg" placeholder="Serach here..."/>
+                </div>
+            </form>
+
+            {% if request.user.is_authenticated %}
+
+            <a href="{% url 'logout_user' %}" class="px-5 py-3 m-2 block font-mono font-semibold text-negro rounded-lg bg-claro">
+                LOGOUT
+            </a>
+
+            <a href="{% url 'create_room' %}" class="px-5 py-3 m-2 block font-mono font-semibold text-negro rounded-lg bg-rosa">
+                CREATE
+            </a>
+
+            {% else %}
+
+            <a href="{% url 'register_page' %}" class="px-5 py-3 m-2 block font-mono font-semibold text-negro rounded-lg bg-claro">
+                REGISTER
+            </a>
+
+            <a href="{% url 'login_page' %}" class="px-5 py-3 m-2 block font-mono font-semibold text-negro rounded-lg bg-rosa">
+                LOGIN
+            </a>
+
+            {% endif %}
+
+        </div>
+    </div>
+</nav>

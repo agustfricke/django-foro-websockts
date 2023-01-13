@@ -1,0 +1,67 @@
+{% extends 'index.html' %}
+
+{% block title %}  {{ room.name }} {% endblock %}
+
+
+{% block content %}
+
+<div class="mt-6">
+    <div class="relative max-w-[800px] mx-auto bg-oscuro rounded-lg">
+        <div class="w-full">
+            <div class="text-center p-3 border-b border-claro">
+                <span class="block font-mono text-xl font-semibold text-claro">
+                    {{ room.name }}
+                </span>
+            </div>
+
+            <div class="relative w-full p-6 overflow-y-auto h-[40rem]">
+                <ul class="space-y-2" id="chat-body">
+                {% for message in m %}
+                {% if message.user.username == request.user.username %}
+                    <li class="flex justify-end">
+                        <div class="relative max-w-xl px-4 py-2 font-mono bg-claro text-negro rounded-lg">
+                            <span class="block">
+                                Mensaje
+                            </span>
+                        </div>
+                    </li>
+                    {% else %}
+                    <li class="flex justify-start">
+                        <div class="relative max-w-xl px-4 py-2 font-mono bg-rosa text-negro rounded-lg">
+                            <span class="block">
+                                Mensaje
+                            </span>
+                        </div>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="flex items-center justify-between w-full p-3 border-t border-claro">
+
+                <input type="text" placeholder="Type here ..." id="chat-message-input"
+                class="block w-full py-2 pl-4 rounded-lg mx-3 bg-gray-100 text-gray-700"/>
+
+                <button id="chat-message-submit">
+                    <svg class="w-6 h-6  text-claro origin-center transform rotate-90 " xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+                </svg>
+                </button>
+            
+            </div>
+        
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+
+{{ room.id|json_script:"json-roomid" }}
+{{ request.user.username|json_script:"json-username" }}
+
+{% endblock %}
+
+{% endblock %}

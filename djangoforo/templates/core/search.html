@@ -1,0 +1,76 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %} Search for {{ query }} {% endblock %}
+
+
+{% block content %}
+
+<div>
+
+    <div class="mt-6 flex flex-col items-center justify-center px-6 py-8 mx-auto">
+        <div class="w-full rounded-lg max-w-md bg-oscuro">
+            <div class="p-6 space-y-4">
+                <h1 class="text-xl text-center font-mono font-semibold text-claro">
+                    Results for "{{ query }}"
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    {% for room in rooms %}
+    <div class="mt-6 flex flex-col items-center justify-center px-6 py-8 mx-auto">
+        <div class="w-full rounded-lg max-w-md bg-oscuro">
+            <div class="p-6 space-y-4">
+                <h1 class="text-xl p-2 text-center font-mono font-semibold text-claro">
+                    {{ room.name }}
+                  </h1>
+          
+                  <div class="flex justify-center">
+          
+                    <a href="{% url 'room' room.id %}" class="p-3 font-mono font-semibold text-negro rounded-lg bg-rosa">
+                      Enter
+                    </a>
+          
+                    <form action="." class="ml-2" method="POST">
+                      {% csrf_token %}
+          
+                      <input type="hidden"/>
+          
+                      <button type="submit">
+                        <img src="{% static 'images/unlike.jpg' %}" width="40" height="40"/>
+                      </button>
+          
+                      <button type="submit">
+                        <img src="{% static 'images/like.jpg' %}" width="40" height="40"/>
+                      </button>
+          
+                    </form>
+          
+                  </div>
+          
+                  <div class="flex justify-center">
+          
+                    <p class="text-sm font-mono font-semibold p-2 text-claro">
+                      Host:
+          
+                      <a href="" class="text-sm font-mono hover:text-verde font-semibold text-claro">
+                       {{ room.user.username }}
+                      </a>
+          
+                      <span class="font-mono font-semibold text-rosa">
+                        34 Likes
+                      </span>
+                    </p>
+          
+                  </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+
+
+
+{% endblock %}
